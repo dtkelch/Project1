@@ -54,7 +54,7 @@ public class firstActivity extends ActionBarActivity {
 
     @Click(R.id.button)
     void buttonWasClicked() {
-        System.out.println("success");
+        print("success");
 
         secondActivity_.intent(this)
                 .testString("hello there second activity")
