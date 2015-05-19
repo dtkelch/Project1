@@ -60,4 +60,14 @@ public class firstActivity extends ActionBarActivity {
                 .testString("hello there second activity")
                 .start();
     }
+
+    /**
+     * This is a printing method.
+     * @param text the text to print.
+     */
+    private void print(String text) {
+        if(text != null && text.length() > 0) {
+            System.out.println(text);
+        }
+    }
 }
