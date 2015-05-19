@@ -1,10 +1,12 @@
 package com.spencer.project1;
 
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -59,5 +61,15 @@ public class firstActivity extends ActionBarActivity {
         secondActivity_.intent(this)
                 .testString("hello there second activity")
                 .start();
+    }
+
+    @Click(R.id.button2)
+    void whatsUpClicked() {
+        Context context = getApplicationContext();
+        CharSequence text = "Whaddup!";
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 }
