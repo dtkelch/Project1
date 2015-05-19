@@ -54,10 +54,20 @@ public class firstActivity extends ActionBarActivity {
 
     @Click(R.id.button)
     void buttonWasClicked() {
-        System.out.println("success");
+        print("success");
 
         secondActivity_.intent(this)
                 .testString("hello there second activity")
                 .start();
+    }
+
+    /**
+     * This is a printing method.
+     * @param text the text to print.
+     */
+    private void print(String text) {
+        if(text != null && text.length() > 0) {
+            System.out.println(text);
+        }
     }
 }
