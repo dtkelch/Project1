@@ -14,7 +14,7 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_second)
-public class secondActivity extends ActionBarActivity {
+public class SecondActivity extends ActionBarActivity {
 
     @Extra
     String testString;
@@ -29,7 +29,7 @@ public class secondActivity extends ActionBarActivity {
 
     @Click(R.id.back)
     void backClicked() {
-        Intent intent = firstActivity_.intent(this).testString("GoodBye Second Activity").get();
+        Intent intent = FirstActivity_.intent(this).testString("GoodBye Second Activity").get();
         startActivity(intent);
     }
     @AfterViews

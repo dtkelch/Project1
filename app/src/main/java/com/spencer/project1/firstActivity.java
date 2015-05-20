@@ -15,7 +15,7 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_first)
-public class firstActivity extends ActionBarActivity {
+public class FirstActivity extends ActionBarActivity {
 
     @Extra
     String testString;
@@ -58,7 +58,7 @@ public class firstActivity extends ActionBarActivity {
     void buttonWasClicked() {
         print("success");
 
-        secondActivity_.intent(this)
+        SecondActivity_.intent(this)
                 .testString("hello there second activity")
                 .start();
     }
