@@ -117,6 +117,10 @@ public class FirstActivity extends ActionBarActivity {
         displayToast(json); //ui process
     }
 
+    /**
+     * Displays a {@link Toast#LENGTH_SHORT} toast on the ui-thread.
+     * @param text the text to display.
+     */
     @UiThread
     protected void displayToast(String text) {
         //methods annotated with @UiThread will run on the ui-thread
