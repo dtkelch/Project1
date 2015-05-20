@@ -38,7 +38,7 @@ public class FirstActivity extends ActionBarActivity {
 
     @AfterViews
     void afterView() {
-        textView.setText(testString);
+       // textView.setText(testString);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,9 +112,12 @@ public class FirstActivity extends ActionBarActivity {
         String json = mPersonRepository.getPerson(index); //network call.
 
         Gson gson = new Gson();
-        gson.fromJson(json, String.class);
-
-        displayToast(json); //this method does ui stuff so, run it on ui thread.
+        gson.fromJson(json, Person.class);
+        System.out.println(json);
+        System.out.println(gson.toString());
+//        displayToast(json); //this method does ui stuff so, run it on ui thread.
+//        displayToast("PAUSE");
+//        displayToast(gson.toString()); //this method does ui stuff so, run it on ui thread.
     }
 
     @Background
@@ -123,9 +126,10 @@ public class FirstActivity extends ActionBarActivity {
         //this method uses network so he requires another thread.
         String json = mPersonRepository.getPeople(); //network call
 
-        //TODO: Spencer, turn this json string to an object.
-
-        displayToast(json); //ui process
+        Gson gson = new Gson();
+        gson.fromJson(json, Person.class);
+        System.out.println(gson.toString());
+//        displayToast(json); //ui process
     }
 
     /**

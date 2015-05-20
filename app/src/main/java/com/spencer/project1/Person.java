@@ -11,6 +11,6 @@ public class Person {
 
     public Person(String name, String lastName) {
         this.name = name;
-        this.lastName = name;
+        this.lastName = lastName;
     }
 }
