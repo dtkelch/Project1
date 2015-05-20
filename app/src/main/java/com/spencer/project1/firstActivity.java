@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.androidannotations.annotations.AfterViews;
 
@@ -19,6 +20,9 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
+
+import java.lang.reflect.Type;
+import java.util.Collection;
 
 @EActivity(R.layout.activity_first)
 public class FirstActivity extends ActionBarActivity {
@@ -107,12 +111,10 @@ public class FirstActivity extends ActionBarActivity {
         //this method uses network so he requires another thread.
         String json = mPersonRepository.getPerson(index); //network call.
         Gson gson = new Gson();
-        gson.fromJson(json, Person.class);
-        System.out.println(json);
-        System.out.println(gson.toString());
-//        displayToast(json); //this method does ui stuff so, run it on ui thread.
-//        displayToast("PAUSE");
-//        displayToast(gson.toString()); //this method does ui stuff so, run it on ui thread.
+        Person person = gson.fromJson(json, Person.class);
+
+        displayToast(person.toString());
+        displayToast(json); //this method does ui stuff so, run it on ui thread.
     }
 
     @Background
@@ -121,9 +123,12 @@ public class FirstActivity extends ActionBarActivity {
         //this method uses network so he requires another thread.
         String json = mPersonRepository.getPeople(); //network call
         Gson gson = new Gson();
-        gson.fromJson(json, Person.class);
-        System.out.println(gson.toString());
-//        displayToast(json); //ui process
+
+        Type collectionOfPeople = new TypeToken<Collection<Person>>(){}.getType();
+        Collection<Person> people = gson.fromJson(json, collectionOfPeople);
+
+        displayToast(people.toString());
+        displayToast(json); //ui process
     }
 
     /**
