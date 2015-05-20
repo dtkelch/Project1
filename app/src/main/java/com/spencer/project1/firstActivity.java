@@ -5,17 +5,30 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.rest.RestService;
+
 
 @EActivity(R.layout.activity_first)
 public class FirstActivity extends ActionBarActivity {
+
+    @RestService
+    PersonRepository mPersonRepository;
+
+    @ViewById(R.id.indexTextView)
+    EditText mIndexEditTextView;
 
     @Extra
     String testString;
@@ -71,6 +84,58 @@ public class FirstActivity extends ActionBarActivity {
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+    }
+
+    @Click(R.id.getPersonButton)
+    void onGetPersonButtonClick() {
+        //get person's index
+        String indexValue = mIndexEditTextView.getText().toString();
+        try {
+            //if the input is a number, parse it and get the person.
+            int index = Integer.parseInt(indexValue);
+            getPerson(index); //execute a process on a background thread.
+        } catch(NumberFormatException e) {
+            //NO-OP
+        }
+    }
+
+    @Click(R.id.getAllPeopleButton)
+    void onGetPeopleButtonClick() {
+        //get all the people
+        getPeople();
+    }
+
+    @Background
+    protected void getPerson(int index) {
+        //methods annotated with @Background will user a separate thread.
+        //this method uses network so he requires another thread.
+        String json = mPersonRepository.getPerson(index); //network call.
+
+        Gson gson = new Gson();
+        gson.fromJson(json, String.class);
+
+        displayToast(json); //this method does ui stuff so, run it on ui thread.
+    }
+
+    @Background
+    protected void getPeople() {
+        //methods annotated with @Background will user a separate thread.
+        //this method uses network so he requires another thread.
+        String json = mPersonRepository.getPeople(); //network call
+
+        //TODO: Spencer, turn this json string to an object.
+
+        displayToast(json); //ui process
+    }
+
+    /**
+     * Displays a {@link Toast#LENGTH_SHORT} toast on the ui-thread.
+     * @param text the text to display.
+     */
+    @UiThread
+    protected void displayToast(String text) {
+        //methods annotated with @UiThread will run on the ui-thread
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     /**
