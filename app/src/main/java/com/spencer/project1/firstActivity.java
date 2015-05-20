@@ -36,6 +36,12 @@ public class FirstActivity extends ActionBarActivity {
     @ViewById(R.id.indexTextView)
     EditText mIndexEditTextView;
 
+    @ViewById(R.id.editTextName)
+    EditText nameEntry;
+
+    @ViewById(R.id.editTextLastName)
+    EditText lastNameEntry;
+
     @AfterViews
     void afterView() {
        // textView.setText(testString);
@@ -103,6 +109,18 @@ public class FirstActivity extends ActionBarActivity {
     void onGetPeopleButtonClick() {
         //get all the people
         getPeople();
+    }
+
+    @Click(R.id.submitButton)
+    void submitButtonClicked() {
+        String name = nameEntry.getText().toString();
+        String lastName = lastNameEntry.getText().toString();
+        Person person = new Person(name, lastName);
+        Gson gson = new Gson();
+        String json = gson.toJson(person);
+        displayToast(json);
+        //mPersonRepository.addPerson(gPerson.toString());
+        displayToast(name + " " + lastName);
     }
 
     @Background
