@@ -1,17 +1,17 @@
 package com.spencer.project1;
 
 import android.content.Context;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import org.androidannotations.annotations.AfterViews;
+
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -20,21 +20,17 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 
-
 @EActivity(R.layout.activity_first)
 public class FirstActivity extends ActionBarActivity {
 
     @RestService
     PersonRepository mPersonRepository;
 
-    @ViewById(R.id.indexTextView)
-    EditText mIndexEditTextView;
-
     @Extra
     String testString;
 
-    @ViewById(R.id.textView)
-    TextView textView;
+    @ViewById(R.id.indexTextView)
+    EditText mIndexEditTextView;
 
     @AfterViews
     void afterView() {
@@ -110,7 +106,6 @@ public class FirstActivity extends ActionBarActivity {
         //methods annotated with @Background will user a separate thread.
         //this method uses network so he requires another thread.
         String json = mPersonRepository.getPerson(index); //network call.
-
         Gson gson = new Gson();
         gson.fromJson(json, Person.class);
         System.out.println(json);
@@ -125,7 +120,6 @@ public class FirstActivity extends ActionBarActivity {
         //methods annotated with @Background will user a separate thread.
         //this method uses network so he requires another thread.
         String json = mPersonRepository.getPeople(); //network call
-
         Gson gson = new Gson();
         gson.fromJson(json, Person.class);
         System.out.println(gson.toString());
