@@ -5,4 +5,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_second">secondActivity</string>
+    <string name="index">Index:</string>
+    <string name="get_person">Get Person</string>
+    <string name="get_all_people">Get All People</string>
 </resources>

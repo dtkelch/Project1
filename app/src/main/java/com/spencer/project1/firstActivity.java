@@ -1,32 +1,35 @@
 package com.spencer.project1;
 
 import android.content.Context;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import org.androidannotations.annotations.AfterViews;
+import com.spencer.project1.data.PersonRepository;
+
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.rest.RestService;
 
 @EActivity(R.layout.activity_first)
-public class firstActivity extends ActionBarActivity {
+public class FirstActivity extends ActionBarActivity {
+
+    @RestService
+    PersonRepository mPersonRepository;
 
     @Extra
     String testString;
 
-    @ViewById(R.id.textView)
-    TextView textView;
+    @ViewById(R.id.indexTextView)
+    EditText mIndexEditTextView;
 
-    @AfterViews
-    void afterView() {
-        textView.setText(testString);
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +61,7 @@ public class firstActivity extends ActionBarActivity {
     void buttonWasClicked() {
         print("success");
 
-        secondActivity_.intent(this)
+        SecondActivity_.intent(this)
                 .testString("hello there second activity")
                 .start();
     }
@@ -71,6 +74,53 @@ public class firstActivity extends ActionBarActivity {
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+    }
+
+    @Click(R.id.getPersonButton)
+    void onGetPersonButtonClick() {
+        //get person's index
+        String indexValue = mIndexEditTextView.getText().toString();
+        try {
+            //if the input is a number, parse it and get the person.
+            int index = Integer.parseInt(indexValue);
+            getPerson(index); //execute a process on a background thread.
+        } catch(NumberFormatException e) {
+            //NO-OP
+        }
+    }
+
+    @Click(R.id.getAllPeopleButton)
+    void onGetPeopleButtonClick() {
+        //get all the people
+        getPeople();
+    }
+
+    @Background
+    protected void getPerson(int index) {
+        //methods annotated with @Background will user a separate thread.
+        //this method uses network so he requires another thread.
+        String json = mPersonRepository.getPerson(index); //network call.
+
+        //TODO: Spencer, turn this json string to an object.
+
+        displayToast(json); //this method does ui stuff so, run it on ui thread.
+    }
+
+    @Background
+    protected void getPeople() {
+        //methods annotated with @Background will user a separate thread.
+        //this method uses network so he requires another thread.
+        String json = mPersonRepository.getPeople(); //network call
+
+        //TODO: Spencer, turn this json string to an object.
+
+        displayToast(json); //ui process
+    }
+
+    @UiThread
+    protected void displayToast(String text) {
+        //methods annotated with @UiThread will run on the ui-thread
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     /**
