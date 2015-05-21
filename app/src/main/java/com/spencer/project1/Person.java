@@ -13,6 +13,10 @@ public class Person {
     @SerializedName("last_name")
     private String lastName;
 
+    public Person() {
+        super();
+    }
+
     public Person(String name, String lastName) {
         super();
         this.name = name;

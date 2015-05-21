@@ -12,7 +12,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.androidannotations.annotations.AfterViews;
-
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -115,12 +114,21 @@ public class FirstActivity extends ActionBarActivity {
     void submitButtonClicked() {
         String name = nameEntry.getText().toString();
         String lastName = lastNameEntry.getText().toString();
-        Person person = new Person(name, lastName);
-        Gson gson = new Gson();
-        String json = gson.toJson(person);
-        displayToast(json);
-        //mPersonRepository.addPerson(gPerson.toString());
-        displayToast(name + " " + lastName);
+        Person person;
+
+        if (name.length() != 0 && lastName.length() != 0) {
+            person = new Person(name, lastName);
+        } else {
+            return;
+        }
+
+        submitPerson(person);
+    }
+
+    @Background
+    protected void submitPerson(Person person) {
+        Person addedPerson = mPersonRepository.postPerson(person);
+        displayToast(addedPerson.toString());
     }
 
     @Background

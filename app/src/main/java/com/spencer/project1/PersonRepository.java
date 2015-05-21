@@ -3,16 +3,15 @@ package com.spencer.project1;
 import org.androidannotations.annotations.rest.Get;
 import org.androidannotations.annotations.rest.Post;
 import org.androidannotations.annotations.rest.Rest;
-import org.json.JSONObject;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
 
 /**
  * Created on 5/19/15.
  * @author Adrian Pena
  */
-@Rest(converters = StringHttpMessageConverter.class)
+@Rest(converters = {StringHttpMessageConverter.class, GsonHttpMessageConverter.class})
 public interface PersonRepository {
-
     /**
      * Gets a list of people.
      * @return a JSON-formatted string with a list of people.
@@ -28,6 +27,10 @@ public interface PersonRepository {
     @Get("http://person.rastadrian.com/person/{index}")
     String getPerson(int index);
 
-    @Post("http://person.rastandrian.com/person/{person}")
-    void addPerson(String person);
+    /**
+     * Adds a new person to the server.
+     * @param person a Person object containing a 'name' and 'last_name'.
+     */
+    @Post("http://person.rastadrian.com/person")
+    Person postPerson(Person person);
 }
