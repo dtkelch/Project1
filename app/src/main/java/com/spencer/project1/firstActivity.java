@@ -26,11 +26,9 @@ import java.util.Collection;
 @EActivity(R.layout.activity_first)
 public class FirstActivity extends ActionBarActivity {
 
+
     @RestService
     PersonRepository mPersonRepository;
-
-    @Extra
-    String testString;
 
     @ViewById(R.id.indexTextView)
     EditText mIndexEditTextView;
@@ -41,10 +39,6 @@ public class FirstActivity extends ActionBarActivity {
     @ViewById(R.id.editTextLastName)
     EditText lastNameEntry;
 
-    @AfterViews
-    void afterView() {
-       // textView.setText(testString);
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

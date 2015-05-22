@@ -29,7 +29,7 @@ public class SecondActivity extends ActionBarActivity {
 
     @Click(R.id.back)
     void backClicked() {
-        Intent intent = FirstActivity_.intent(this).testString("GoodBye Second Activity").get();
+        Intent intent = FirstActivity_.intent(this).get();
         startActivity(intent);
     }
     @AfterViews
