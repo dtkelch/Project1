@@ -1,2 +1,5 @@
 # Thoughts App
-## Spencer Amann
+Spencer Amann
+
+## Requirements
+* Android
