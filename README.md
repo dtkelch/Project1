@@ -1,1 +1,2 @@
-# Thoughts
+# Thoughts App
+## Spencer Amann
